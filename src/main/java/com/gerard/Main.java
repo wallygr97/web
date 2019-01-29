@@ -1,10 +1,14 @@
 package com.gerard;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 
 import java.io.IOException;
 
@@ -26,6 +30,15 @@ public class Main {
         int canPOST = doc.select("form[method='POST']").size();
 
 
+        Elements Form = doc.select("form");
+
+        ArrayList<Elements> inputs = new ArrayList<Elements>();
+
+        for (Element form : Form) {
+            inputs.add(form.getElementsByTag("input"));
+        }
+
+
          //punto 1
         System.out.println("la cantidad de linea que tiene la url son: "+ cantLineas + "\n");
         //punto 2
@@ -35,6 +48,8 @@ public class Main {
         //punto 4
         System.out.println("la cantidad de metodo GET que tiene el doc HTML son: "+ cantGET);
         System.out.println("la cantidad de metodo POST que tiene el doc HTML son: "+ canPOST);
+        //punto 5
+        System.out.println("la cantidad de elemento de tipo input que tiene el doc HTML son: "+ inputs.size() +"\n");
 
 
 
