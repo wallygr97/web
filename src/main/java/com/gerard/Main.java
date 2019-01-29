@@ -22,6 +22,9 @@ public class Main {
         Document doc = Jsoup.connect(url).get();//consigue el documento html de la pagina y se conecta a ella
         int cant_Parrafos = doc.getElementsByTag("p").size();// te da el size de la cantidad de parrafos que tiene
         int cantImgParrafos = doc.select("p img").size();// busca dentro de los parrafos todas las imagenes y nos da los size
+        int cantGET = doc.select("form[method='GET']").size();
+        int canPOST = doc.select("form[method='POST']").size();
+
 
          //punto 1
         System.out.println("la cantidad de linea que tiene la url son: "+ cantLineas + "\n");
@@ -29,6 +32,11 @@ public class Main {
         System.out.println("la cantidad de parrafos que tiene son: "+ cant_Parrafos +"\n");
         //punto 3
         System.out.println("la cantidad de imagen en los parrafos son: "+ cantImgParrafos + "\n");
+        //punto 4
+        System.out.println("la cantidad de metodo GET que tiene el doc HTML son: "+ cantGET);
+        System.out.println("la cantidad de metodo POST que tiene el doc HTML son: "+ canPOST);
+
+
 
     }
 }
