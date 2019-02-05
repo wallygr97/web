@@ -2,14 +2,12 @@ package com.gerard;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.FormElement;
 import org.jsoup.select.Elements;
-
-
 import java.io.IOException;
 
 public class Main {
@@ -24,7 +22,7 @@ public class Main {
         int cantLineas = cuerpo.split("\n").length;
 
         Document doc = Jsoup.connect(url).get();//consigue el documento html de la pagina y se conecta a ella
-        int cant_Parrafos = doc.getElementsByTag("p").size();// te da el size de la cantidad de parrafos que tiene
+       int cant_Parrafos = doc.getElementsByTag("p").size() ;// te da el size de la cantidad de parrafos que tiene
         int cantImgParrafos = doc.select("p img").size();// busca dentro de los parrafos todas las imagenes y nos da los size
         int cantGET = doc.select("form[method='GET']").size();
         int canPOST = doc.select("form[method='POST']").size();
@@ -39,7 +37,23 @@ public class Main {
         }
 
 
-         //punto 1
+            //Connection.Response response = null;
+        //http://itachi.avathartech.com:4567/opcion2.html
+
+        ArrayList<Document> post = new ArrayList<>();
+           for (Element form : doc.getElementsByTag("form").forms()) {
+                String URLabsoltuta = form.absUrl("action");
+                Connection connections = ((FormElement) form).submit();
+                if (form.attr("method").equals("post")) {
+                  post.add( connections.requestBody("{'asignatura': 'practica1'}").header("Matricula", "2013-1910").post());
+
+
+                }
+            }
+
+
+
+        //punto 1
         System.out.println("la cantidad de linea que tiene la url son: "+ cantLineas + "\n");
         //punto 2
         System.out.println("la cantidad de parrafos que tiene son: "+ cant_Parrafos +"\n");
@@ -49,9 +63,13 @@ public class Main {
         System.out.println("la cantidad de metodo GET que tiene el doc HTML son: "+ cantGET);
         System.out.println("la cantidad de metodo POST que tiene el doc HTML son: "+ canPOST);
         //punto 5
-        System.out.println("la cantidad de elemento de tipo input que tiene el doc HTML son: "+ inputs.size() +"\n");
+        System.out.println("la cantidad de elemento de tipo input que tiene el doc HTML son: "+ inputs +"\n");
+        //punto 6
+        System.out.println("visualizando: "+ post  +"\n");
+
+        }
+
 
 
 
     }
-}
